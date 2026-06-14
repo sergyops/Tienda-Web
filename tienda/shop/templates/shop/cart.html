@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Carrito{% endblock %}
+
+{% block content %}
+
+<h1>Carrito</h1>
+
+{% if cart_items %}
+<table>
+    <thead>
+        <tr>
+            <th>Articulo</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in cart_items %}
+        <tr>
+            <td>
+                {% if item.product.image %}
+                    <img src="{{ item.product.image.url }}" width="60">
+                {% else %}
+                    Sin imagen
+                {% endif %}
+            </td>
+
+            <td>
+                <a href="{% url 'product_detail' item.product.id %}">
+                    {{ item.product.name }}
+                </a>
+            </td>
+
+            <td>
+                <form action="{% url 'update_cart' item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="{{ item.quantity }}" min="0">
+                    <button type="submit">Actualizar</button>
+                </form>
+            </td>
+
+            <td>{{ item.product.price }} €</td>
+            <td>{{ item.subtotal }} €</td>
+
+            <td>
+                <a href="{% url 'remove_from_cart' item.product.id %}">
+                    Eliminar
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Total: {{ total }} €</h2>
+
+<a href="{% url 'clear_cart' %}">Vaciar carrito</a>
+<a href="{% url 'payment' %}">Ir al pago</a>
+
+{% else %}
+
+<p>El carrito está vacío</p>
+
+{% endif %}
+
+{% endblock %}

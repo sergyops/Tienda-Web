@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{{product.name}}{% endblock %}
+
+{% block content %}
+    <h1>{{ product.name }}</h1>
+    {% if product.image %}
+        <img src="{{ product.image }}" alt="{{ product.name }}" width="250">
+    {% else %}
+        <p>Sin imagen disponible</p>
+    {% endif %}
+    <p>{{ product.description }}</p>
+    <p>Stock disponible: {{ product.stock }}</p>
+    <p>{{ product.price }} €</p>
+    
+    <form action="{% url 'add_to_cart' product.id %}" method="post">
+        {% csrf_token %}
+        
+        <label>Cantidad:</label>
+        <input type="number" name="quantity" value="1" min="1">
+        
+        <button type="submit">Añadir al carrito</button>
+    </form>
+{% endblock %}

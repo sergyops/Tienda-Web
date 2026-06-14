@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis pedidos{% endblock %}
+
+{% block content %}
+
+<h1>Mis pedidos</h1>
+
+{% if orders %}
+
+<table>
+    <thead>
+    <tr>
+        <th>Nº Pedido</th>
+        <th>Fecha</th>
+        <th>Productos</th>
+        <th>Total</th>
+        <th>Acciones</th>
+    </tr>
+</thead>
+
+<tbody>
+    {% for order in orders %}
+    <tr>
+
+        <td>#{{ order.id }}</td>
+
+        <td>{{ order.created_at }}</td>
+
+        <td>
+            <ul>
+                {% for item in order.orderitem_set.all %}
+                    <li>
+                        {{ item.product.name }} x {{ item.quantity }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </td>
+
+        <td>{{ order.total }} €</td>
+
+        <td>
+            <a href="{% url 'order_detail' order.id %}">
+                Ver detalle
+            </a>
+        </td>
+
+    </tr>
+    {% endfor %}
+</tbody>
+    </tbody>
+</table>
+
+{% else %}
+
+<p>No has realizado ningún pedido aún.</p>
+
+{% endif %}
+
+{% endblock %}

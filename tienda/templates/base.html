@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Tienda{% endblock %}</title>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h1><a href="{% url 'product_list' %}">Mi Tienda</a></h1>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}"> {{ user.username }}</a>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Cerrar sesión</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Registro</a>
+        {% endif %}
+
+        <a href="{% url 'view_cart' %}">Carrito</a>
+        <a href="{% url 'order_history' %}">Mis pedidos</a>
+
+        <!-- 🔍 búsqueda -->
+        <form method="GET" action="{% url 'search_products' %}">
+            <input type="text" name="q" placeholder="Buscar...">
+            <button type="submit">Buscar</button>
+        </form>
+    </header>
+
+    <hr>
+
+    <!-- MENSAJES -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- 🟢 CONTENIDO -->
+    {% block content %}
+    {% endblock %}
+
+    <hr>
+
+    <!-- FOOTER (CONTACTO) -->
+    <footer>
+        <h3>Contacto</h3>
+        <p>Email: tienda@email.com</p>
+        <p>Teléfono: 123 456 789</p>
+        <p>Dirección: Madrid</p>
+        <a href="{% url 'contact' %}">¡Escribenos un mensaje!</a>
+    </footer>
+
+</body>
+</html>

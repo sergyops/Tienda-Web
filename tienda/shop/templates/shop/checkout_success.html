@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Pedido realizado{% endblock %}
+
+{% block content %}
+
+    <h1>¡Pedido realizado!</h1>
+    <p>Tu pedido número {{ order.id }} ha sido creado correctamente.</p>
+
+    <a href="{% url 'product_list' %}">Volver a la tienda</a>
+    
+{% endblock %}

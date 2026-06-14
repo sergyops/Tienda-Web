@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Pedido #{{ order.id }}{% endblock %}
+
+{% block content %}
+
+<h1>Pedido #{{ order.id }}</h1>
+
+<p>Fecha: {{ order.created_at }}</p>
+<p>Usuario: {{ order.user.username }}</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in order.orderitem_set.all %}
+        <tr>
+
+            <!-- IMAGEN -->
+            <td>
+                {% if item.product.image %}
+                    <img src="{{ item.product.image.url }}" width="60">
+                {% else %}
+                    Sin imagen
+                {% endif %}
+            </td>
+
+            <!-- PRODUCTO -->
+            <td>
+                <a href="{% url 'product_detail' item.product.id %}">
+                    {{ item.product.name }}
+                </a>
+            </td>
+
+            <!-- CANTIDAD -->
+            <td>{{ item.quantity }}</td>
+
+            <!-- PRECIO -->
+            <td>{{ item.product.price }} €</td>
+
+            <!-- SUBTOTAL -->
+            <td>{{ item.subtotal }} €</td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Total: {{ order.total }} €</h2>
+
+<a href="{% url 'order_history' %}">Volver a pedidos</a>
+
+{% endblock %}
