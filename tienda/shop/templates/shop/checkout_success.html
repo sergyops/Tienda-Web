@@ -4,9 +4,38 @@
 
 {% block content %}
 
-    <h1>¡Pedido realizado!</h1>
-    <p>Tu pedido número {{ order.id }} ha sido creado correctamente.</p>
+<div class="d-flex justify-content-center">
 
-    <a href="{% url 'product_list' %}">Volver a la tienda</a>
-    
+    <div class="card shadow-sm p-4 text-center" style="max-width: 500px;">
+
+        <h3 class="fw-bold mb-3">Pedido realizado</h3>
+
+        <p class="mb-2">
+            Tu pedido <strong>#{{ order.id }}</strong> se ha creado correctamente.
+        </p>
+
+        <p class="text-muted mb-4">
+            Recibirás la confirmación en breve.
+        </p>
+
+        <div class="d-grid gap-2">
+
+            <a href="{% url 'order_detail' order.id %}" class="btn btn-primary">
+                Ver mi pedido
+            </a>
+
+            <a href="{% url 'order_history' %}" class="btn btn-outline-dark">
+                Ver mis pedidos
+            </a>
+
+            <a href="{% url 'product_list' %}" class="btn btn-light">
+                Seguir comprando
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
 {% endblock %}

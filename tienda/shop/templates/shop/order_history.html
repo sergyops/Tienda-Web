@@ -4,56 +4,72 @@
 
 {% block content %}
 
-<h1>Mis pedidos</h1>
+<h1 class="mb-4">Mis pedidos</h1>
 
 {% if orders %}
 
-<table>
-    <thead>
-    <tr>
-        <th>Nº Pedido</th>
-        <th>Fecha</th>
-        <th>Productos</th>
-        <th>Total</th>
-        <th>Acciones</th>
-    </tr>
-</thead>
+<div class="row g-3">
 
-<tbody>
     {% for order in orders %}
-    <tr>
 
-        <td>#{{ order.id }}</td>
+    <div class="col-12">
 
-        <td>{{ order.created_at }}</td>
+        <div class="card shadow-sm">
 
-        <td>
-            <ul>
-                {% for item in order.orderitem_set.all %}
-                    <li>
-                        {{ item.product.name }} x {{ item.quantity }}
-                    </li>
-                {% endfor %}
-            </ul>
-        </td>
+            <div class="card-body">
 
-        <td>{{ order.total }} €</td>
+                <!-- Cabecera -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
 
-        <td>
-            <a href="{% url 'order_detail' order.id %}">
-                Ver detalle
-            </a>
-        </td>
+                    <h5 class="mb-0">Pedido #{{ order.id }}</h5>
 
-    </tr>
+                    <span class="text-muted">
+                        {{ order.created_at }}
+                    </span>
+
+                </div>
+
+                <!-- Productos -->
+                <div class="mb-3">
+
+                    <strong>Productos:</strong>
+
+                    <ul class="mb-0 mt-2">
+                        {% for item in order.orderitem_set.all %}
+                            <li>
+                                {{ item.product.name }} × {{ item.quantity }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <h5 class="text-danger mb-0">
+                        {{ order.total }} €
+                    </h5>
+
+                    <a href="{% url 'order_detail' order.id %}" class="btn btn-primary btn-sm">
+                        Ver detalle
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
     {% endfor %}
-</tbody>
-    </tbody>
-</table>
+
+</div>
 
 {% else %}
 
-<p>No has realizado ningún pedido aún.</p>
+<p class="text-muted">No has realizado ningún pedido aún.</p>
 
 {% endif %}
 

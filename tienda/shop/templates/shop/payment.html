@@ -3,21 +3,52 @@
 {% block title %}Pago{% endblock %}
 
 {% block content %}
-    <form method="post">
-    {% csrf_token %}
 
-    <label>Nombre en la tarjeta:</label><br>
-    <input type="text" name="name" required><br><br>
+<div class="d-flex justify-content-center">
 
-    <label>Número de tarjeta:</label><br>
-    <input type="text" name="card" required><br><br>
+    <div class="card shadow-sm p-4 w-100" style="max-width: 500px;">
 
-    <label>Fecha de caducidad:</label><br>
-    <input type="text" name="expiry" placeholder="MM/AA" required><br><br>
+        <h2 class="text-center mb-4 fw-bold">Pago</h2>
 
-    <label>CVV:</label><br>
-    <input type="text" name="cvv" required><br><br>
+        <form method="post">
+            {% csrf_token %}
 
-    <button type="submit">Pagar</button>
-</form>
+            <!-- Nombre tarjeta -->
+            <div class="mb-3">
+                <label class="form-label">Nombre del titular de la tarjeta</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+
+            <!-- Número tarjeta -->
+            <div class="mb-3">
+                <label class="form-label">Número de tarjeta</label>
+                <input type="text" name="card" class="form-control" required>
+            </div>
+
+            <!-- Fecha + CVV -->
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Caducidad</label>
+                    <input type="text" name="expiry" class="form-control" placeholder="MM/AA" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">CVV</label>
+                    <input type="text" name="cvv" class="form-control" required>
+                </div>
+
+            </div>
+
+            <!-- Botón -->
+            <button type="submit" class="btn btn-primary w-100">
+                Pagar ahora
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
 {% endblock %}
