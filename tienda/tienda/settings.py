@@ -121,3 +121,7 @@ STATIC_URL = 'static/'
 #Redirecciones al hacer login y logout
 LOGIN_REDIRECT_URL = 'product_list'
 LOGOUT_REDIRECT_URL = 'product_list'
+
+#Configuración imagenes productos
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

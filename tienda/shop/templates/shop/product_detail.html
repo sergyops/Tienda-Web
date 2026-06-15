@@ -5,7 +5,7 @@
 {% block content %}
     <h1>{{ product.name }}</h1>
     {% if product.image %}
-        <img src="{{ product.image }}" alt="{{ product.name }}" width="250">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" width="250">
     {% else %}
         <p>Sin imagen disponible</p>
     {% endif %}
