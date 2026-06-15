@@ -4,59 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Tienda{% endblock %}</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Color principal */
+        .btn-primary {
+            background-color: #e53935;
+            border-color: #e53935;
+        }
+
+        .btn-primary:hover {
+            background-color: #c62828;
+        }
+
+        /* Header rojo */
+        header {
+            background-color: #e53935;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        header a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 
     <!-- HEADER -->
-    <header>
-        <h1><a href="{% url 'product_list' %}">Mi Tienda</a></h1>
+    <header class="p-3">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <!-- Nombre tienda -->
+                <h2>
+                    <a href="{% url 'product_list' %}">Mi Tienda</a>
+                </h2>
+                <!-- Enlaces -->
+                 <div>
+                    <a class="me-2" href="{% url 'view_cart' %}">Carrito</a>
+                    <a class="me-2" href="{% url 'order_history' %}">Mis pedidos</a>
 
-        {% if user.is_authenticated %}
-            <a href="{% url 'profile' %}"> {{ user.username }}</a>
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit">Cerrar sesión</button>
+                    {% if user.is_authenticated %}
+                        <a class="me-2" href="{% url 'profile' %}"> {{ user.username }}</a>
+
+                        <form method="post" action="{% url 'logout' %}" class="d-inline">
+                            {% csrf_token %}
+                            <button class="btn btn-dark btn-sm" type="submit">Cerrar sesión</button>
+                        </form>
+                    {% else %}
+                        <a class="me-2" href="{% url 'login' %}">Login</a>
+                        <a class="btn btn-dark btn-sm" href="{% url 'register' %}">Registro</a>
+                    {% endif %}
+                 </div>
+            </div>
+            
+            <!-- búsqueda -->
+            <form method="GET" action="{% url 'search_products' %}" class="d-flex mt-3">
+                <input class="form-control me-2" type="text" name="q" placeholder="Buscar productos...">
+                <button class="btn btn-light" type="submit">Buscar</button>
             </form>
-        {% else %}
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'register' %}">Registro</a>
-        {% endif %}
-
-        <a href="{% url 'view_cart' %}">Carrito</a>
-        <a href="{% url 'order_history' %}">Mis pedidos</a>
-
-        <!-- 🔍 búsqueda -->
-        <form method="GET" action="{% url 'search_products' %}">
-            <input type="text" name="q" placeholder="Buscar...">
-            <button type="submit">Buscar</button>
-        </form>
+        </div>
     </header>
 
-    <hr>
+    <!-- Contenido -->
+     <div class="container mt-4">
+        <!-- MENSAJES -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
 
-    <!-- MENSAJES -->
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert {{ message.tags }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
+        <!-- Contenido otros html -->
+        {% block content %}
+        {% endblock %}
+     </div>
 
-    <!-- 🟢 CONTENIDO -->
-    {% block content %}
-    {% endblock %}
-
-    <hr>
-
-    <!-- FOOTER (CONTACTO) -->
-    <footer>
-        <h3>Contacto</h3>
+    <!-- Footer - datos contacto -->
+    <footer class="bg-dark text-white text-center p-4 mt-5">
+        <h5>Contacto</h5>
         <p>Email: tienda@email.com</p>
         <p>Teléfono: 123 456 789</p>
         <p>Dirección: Madrid</p>
-        <a href="{% url 'contact' %}">¡Escribenos un mensaje!</a>
+        <a href="{% url 'contact' %}" class="text-white">¡Escribenos un mensaje!</a>
     </footer>
-
 </body>
 </html>
