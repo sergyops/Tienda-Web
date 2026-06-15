@@ -246,3 +246,11 @@ def profile(request):
         form.fields['email'].initial = request.user.email
 
     return render(request, 'shop/profile.html', {'form': form})
+
+def products_by_category(request, category_id):
+    products = Product.objects.filter(category_id=category_id)
+
+    return render(request, 'shop/product_list.html', {
+        'products': products,
+        'selected_category': category_id
+    })
