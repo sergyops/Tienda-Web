@@ -100,6 +100,7 @@ class UserProfileForm(forms.ModelForm):
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(
+        label="Correo eléctronico",
         required=True,
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
@@ -108,6 +109,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     username = forms.CharField(
+        label="Nombre de usuario",
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'Usuario'
@@ -115,6 +117,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     password1 = forms.CharField(
+        label="Contraseña",
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
             'placeholder': 'Contraseña'
@@ -122,6 +125,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     password2 = forms.CharField(
+        label="Repite la contraseña",
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
             'placeholder': 'Repite la contraseña'
