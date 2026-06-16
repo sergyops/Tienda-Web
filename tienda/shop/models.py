@@ -20,6 +20,21 @@ class Product(models.Model):
 
 
 class Order(models.Model):
+
+    STATUS_CHOICES = [
+        ('pending', 'Pendiente'),
+        ('preparing', 'En preparación'),
+        ('shipped', 'Enviado'),
+        ('out_for_delivery', 'En reparto'),
+        ('delivered', 'Entregado'),
+    ]
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='pending'
+    )
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 

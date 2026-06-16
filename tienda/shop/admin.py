@@ -12,7 +12,10 @@ class OrderItemInline(admin.TabularInline):
     extra = 0
 # ADMIN DE ORDER
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user')
+    list_display = ('id', 'user', 'status', 'created_at', 'total')
+    list_editable = ('status',)
+    list_filter = ('status', 'created_at')
+    search_fields = ('user__username',)
     inlines = [OrderItemInline]
 # REGISTRO FINAL
 admin.site.register(Order, OrderAdmin)
